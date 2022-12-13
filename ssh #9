@@ -1,0 +1,49 @@
+становимся супер-пользователем
+скачиваем и  устанавливаем lxd и lxc
+создаём 2 контейнера и запускаем
+Создаём rsa ключ
+
+sudo su
+sudo apt install lxd
+lxd init
+lxc init
+lxc init ubuntu:20.04 akhmad
+lxc init ubuntu:20.04 akhmad1
+lxc start akhmad
+lxc start akhmad1
+lxc list
+ssh-keygen
+
+3аходим внутрь контейнера akhmad
+Переходим в файл ssh_config
+Меняем PermitRootLogin prohibit-password на PermitRootLogin yes
+И PasswordAuthentication no на PasswordAuthentication yes
+
+lxc exec axmed/bin/bash
+cd /etc/ssh
+nano sshd_config
+systemctl restart ssh*.service
+passwd root
+exit
+
+тоже самое делаем с akhmad1
+
+lxc exec axmed1 /bin/bash
+cd /etc/ssh
+nano sshd_config
+systemctl restart ssh*.service
+passwd root
+exit
+
+кидаем ключи в контейнеры
+
+ssh-copy-id root@10.142.196.244
+ssh-copy-id root@10.169.210.176
+
+заходим в akhmad создаем ключ в нем и кидаем его в akhmad1
+все работает (скрин прилагается)
+
+ssh root@10.142.196.244
+ssh-keygen
+ssh-copy-id root@10.169.210.176
+ssh root@10.169.210.176
